@@ -1,7 +1,7 @@
-const cardTemplate = function (/* You can pass the data here*/) {
+const cardTemplate = function (props) {
   return `<div class="card">
-              <img id="flag-image" src="ADD THE IMAGE LINK HERE" alt="flag" />
-              <h1 class="center">ADD COUNTRY NAME HERE</h1>
+              <img id="flag-image" src="${props.img}" alt="${props.alt}" />
+              <h1 class="center">${props.commonName}</h1>
             </div>`;
 };
 
@@ -15,11 +15,9 @@ try {
     })
     .then(function (countries) {
       countries.map(country => {
-        let name = country.name.common;
-        let flag = country.flags.svg;
-        let alt = country.flags.alt;
-  
-        countriesNode.innerHTML += cardTemplate({name, flag, alt});
+        let { name:{common:commonName}, flags:{svg:img , alt} } = country;
+        let props = {commonName, img, alt};
+        countriesNode.innerHTML += cardTemplate(props);
       })
     });
 }
